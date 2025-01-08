@@ -1,1 +1,15 @@
-<p>toast works!</p>
+<div *ngIf = "toasts().length > 0" class="fixed top-5 right-5 z-[9999] space-y-4">
+    <div *ngFor = "let toast of toasts(); trackBy: trackByToastId">
+        <div
+        class="flex items-center w-full max-w-xs p-4 animate-fade-in text-gray-500 bg-white rounded-lg shadow-md shadow-gray-400 transition-all duration-300"
+        role="alert">
+            <div
+            class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg"
+            [class]="getIconBackgroundClass(toast.type)">
+                <span [class]="getIconClass(toast.type)"></span>
+            </div>
+            <div class="ms-3 text-sm font-normal"
+            [class] = "getTextColorClasses(toast.type)">{{ toast.message }}</div>
+        </div>
+    </div>
+</div>
