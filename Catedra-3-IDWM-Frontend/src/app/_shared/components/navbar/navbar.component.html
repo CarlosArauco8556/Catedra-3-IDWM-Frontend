@@ -1,1 +1,113 @@
-<p>navbar works!</p>
+<nav class="bg-white border-b border-gray-200 shadow-sm">
+    <div class="max-w-screen-xl mx-auto flex items-center justify-between p-4">
+      <!-- Logo -->
+      <a href="#" class="flex items-center">       
+        <span class="pl-2 self-center text-3xl font-semibold text-gray-800"
+          >Gestion de posts</span
+        >
+      </a>
+  
+      <!-- Iconos -->
+      <div class="flex items-center space-x-6">
+
+        <!-- Posts -->
+        <div class="relative">
+            <button
+              (click)="toggleMenuPosts()"
+              class="text-gray-600 hover:text-gray-800 focus:outline-none translate-y-0.5"
+              (mouseenter)="postIconIsHovered = true"
+              (mouseleave)="postIconIsHovered = false">
+              <!-- Icono de post -->
+              <svg
+                class="w-10 h-10 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                >
+                <path
+                    [attr.stroke]="postIconIsHovered ? '#4F46E5' : '#76A9FA'"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z"
+                />
+               </svg>
+            </button>
+
+          <!-- Menu desplegable de Posts-->
+          <div
+            *ngIf="menuOpenPosts"
+            class="absolute -right-11 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
+          >
+            <ul>
+              <li>
+                <a (click)="goToPage('GetPosts')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
+                   Listar Posts
+                </a>
+              </li>
+              <li>
+                <a (click)="goToPage('CreatePost')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
+                  Crear Post
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Autenticacion -->
+        <div class="relative">
+          <button
+            (click)="toggleMenuAuth()"
+            class="text-gray-600 hover:text-gray-800 focus:outline-none translate-y-0.5"
+            (mouseenter)="auhtIconIsHovered = true"
+            (mouseleave)="auhtIconIsHovered = false">
+            <!-- Icono de usuario -->
+            <svg
+              class="w-10 h-10 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="23"
+              height="23"
+              fill="none"
+              viewBox="0 0 23 23"
+            >
+              <path
+                [attr.stroke]="auhtIconIsHovered ? '#4F46E5' : '#76A9FA'"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+          </button>
+  
+          <!-- Menu desplegable de Autenticacion-->
+          <div
+            *ngIf="menuOpenAuth"
+            class="absolute -right-11 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
+          >
+            <ul>
+              <li>
+                <a (click)="goToPage('Login')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
+                  Iniciar Sesion
+                </a>
+              </li>
+              <li>
+                <a (click)="goToPage('Register')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
+                  Registrarse
+                </a>
+              </li>
+              <li>
+                <a (click)="logOut()" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
+                  Cerrar Sesion
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
