@@ -25,9 +25,11 @@ export class NavbarComponent {
   
   toggleMenuPosts(): void{
     this.menuOpenPosts = !this.menuOpenPosts;
+    this.menuOpenAuth = false;
   }
   toggleMenuAuth(): void {
     this.menuOpenAuth = !this.menuOpenAuth;
+    this.menuOpenPosts = false;
   }
 
   goToPage(page: string){
