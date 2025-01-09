@@ -1,1 +1,69 @@
-<p>login-page works!</p>
+<navbar></navbar>
+
+<div
+  class="flex justify-center items-center mt-28"
+>
+  <!-- Contenedor del formulario -->
+  <div
+    class="relative w-full max-w-md bg-white rounded-lg shadow mx-4"
+  >
+
+    <!-- Formulario -->
+    <form class="p-6" [formGroup]="forms" (ngSubmit)="onSubmit()">
+      <div class="mb-6">
+        <label
+          for="email"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Email</label
+        >
+        <input
+          type="email"
+          id="email"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          formControlName="email"
+          placeholder="nombre@ejemplo.com"
+          required
+        />
+        <div>
+          <p *ngIf="EmailErrors" class="text-red-500 text-sm">
+            {{ EmailErrors }}
+          </p>
+        </div>
+      </div>
+      <div class="mb-6">
+        <label
+          for="password"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Contraseña</label
+        >
+        <input
+          type="password"
+          id="password"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          formControlName="password"
+          placeholder="•••••••••"
+          required
+        />
+        <div>
+          <p *ngIf="PasswordErrors" class="text-red-500 text-sm">
+            {{ PasswordErrors }}
+          </p>
+        </div>
+      </div>
+
+      <button
+        type="submit" [ngClass]="{'cursor-not-allowed opacity-50': forms.invalid}"
+        class="w-full mb-4 text-white bg-[#76A9FA] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      >
+        Iniciar Sesión
+      </button>
+
+      <p class="text-sm text-center text-gray-600">
+        ¿No tienes cuenta?
+        <a href="/register" class="text-blue-600 hover:underline"
+          >Regístrate</a
+        >
+      </p>
+    </form>
+  </div>
+</div>
