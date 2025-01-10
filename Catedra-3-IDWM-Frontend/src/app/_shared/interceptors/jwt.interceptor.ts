@@ -4,6 +4,7 @@ import { inject } from '@angular/core';
 
 export const jwtInterceptor: HttpInterceptorFn = (req, next) => {
   const localStorageService = inject(LocalStorageService);
+
   const token = localStorageService.getVariable('token');
 
   if (token) {

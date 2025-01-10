@@ -62,6 +62,7 @@ export class RegisterPageComponent {
         console.log('Error al registrar el usuario', this.authService.errors);
         const lastError = this.authService.errors[this.authService.errors.length - 1];
         this.toastService.error(lastError || 'Error al registrar el usuario.');
+        this.forms.get('password')?.reset();
       }
     } catch (error) {
       console.log('Error al registrar el usuario', this.authService.errors);
@@ -71,6 +72,7 @@ export class RegisterPageComponent {
             typeof error.error === 'string' ? error.error : error.error.message
           this.toastService.error(errorMessage || 'Error al registrar el usuario');
         }
+      this.forms.get('password')?.reset();
     }
   }
 

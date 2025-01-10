@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ToastService } from '../../../_shared/services/toast.service';
 import { ICreatePost } from '../../interfaces/ICreatePost';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'create-post-page',
@@ -23,7 +24,7 @@ export class CreatePostPageComponent {
   imagePreview: string | null = null;
   selectedImage: File | null = null;
 
-  constructor(private FormBuilder: FormBuilder) {}
+  constructor(private FormBuilder: FormBuilder, private Router: Router) {}
 
   ngOnInit() {
     this.createForm();
@@ -51,16 +52,19 @@ export class CreatePostPageComponent {
   
       if (!validMimeTypes.includes(file.type)) { 
         errors['invalidImageFormat'] = true;
+        this.removeImage();
       }
   
       const fileName = file.name.toLowerCase();
       const hasValidExtension = validExtensions.some(ext => fileName.endsWith(ext));
       if (!hasValidExtension) {
         errors['invalidImageFormat'] = true; 
+        this.removeImage();
       }
   
       if (file.size > maxSize) { 
         errors['imageTooLarge'] = true; 
+        this.removeImage();
       }
   
       return Object.keys(errors).length > 0 ? errors : null; 
@@ -144,11 +148,13 @@ export class CreatePostPageComponent {
         console.log('Post Creado:', response);
         this.toastService.success('Post creado correctamente'); 
         this.removeImage() 
+        this.Router.navigate(['/get-posts']);
       } else {
         console.log("Error in createPost page ",this.errors);
         this.errors = this.postService.errors; 
         const lastError = this.errors[this.errors.length - 1]; 
         this.toastService.error(lastError || 'Ocurrio un error desconocido');
+        this.removeImage();
       }
     } catch (error: any) {
       if(error instanceof HttpErrorResponse)
@@ -159,6 +165,7 @@ export class CreatePostPageComponent {
         this.toastService.error(errorMessage || 'Ocurrió un error inesperado');
       }
       console.log('Error en createPost page', error);
+      this.removeImage();
     }
   }
 }

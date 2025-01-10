@@ -61,17 +61,19 @@ export class LoginPageComponent {
           console.log('usuario:', this.localStorageService.getVariable('user'));
           console.log(response);
           this.toastService.success('Usuario logueado correctamente.');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/get-posts']);
 
         } else {
           console.log('Error al loguear el usuario', this.authService.errors);
           const lastError = this.authService.errors[this.authService.errors.length - 1];
           this.toastService.error(lastError || 'Error al loguear el usuario.');
+          this.forms.get('password')?.reset();
         }
       } else {
         console.log('Error al loguear el usuario', this.authService.errors);
         const lastError = this.authService.errors[this.authService.errors.length - 1];
         this.toastService.error(lastError || 'Error al loguear el usuario.');
+        this.forms.get('password')?.reset();
       }
     } catch (error) {
       console.log('Error al loguear el usuario', this.authService.errors);
@@ -81,6 +83,7 @@ export class LoginPageComponent {
             typeof error.error === 'string' ? error.error : error.error.message
           this.toastService.error(errorMessage || 'Error al loguear el usuario');
         }
+      this.forms.get('password')?.reset();
     }
   }
 

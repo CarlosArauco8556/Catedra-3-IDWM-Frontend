@@ -1,2 +1,76 @@
 <navbar></navbar>
-<p>get-posts-page works!</p>
+
+<div class = "mx-20">
+    <!-- Search bar -->
+    <div class="max-w-screen-xl flex items-center justify-center mt-4 p-4">
+        <div class="relative w-1/2 ">
+            <input
+            type="text"
+            #input
+            (keyup.enter)="getPosts(input.value)"
+            placeholder="Buscar productos"
+            class="w-full p-2.5 rounded-[30px] border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+            type="submit"
+            (click)="getPosts(input.value)"
+            class="absolute top-1/2 transform -translate-y-1/2 right-0 text-gray-500"
+            >
+            <span
+                class="bg-[#76A9FA] p-3 rounded-full inline-flex items-center justify-center"
+            >
+                <svg
+                class="w-4 h-4 text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+                >
+                <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
+                />
+                </svg>
+            </span>
+            </button>
+        </div>
+    </div>
+
+
+    <div class="mt-7 flex items-center justify-between w-full px-7 gap-4">
+        <!-- Botón desplegable -->
+        <div class="flex flex-col items-center justify-center w-1/6">
+            <label
+                for="isDescendingDate"
+                class="block mr-3 text-sm font-medium text-gray-900"
+            >
+                Ordenar por fecha
+            </label>
+            <select
+                id="isDescendingDate"
+                class="block pr-5 pl-3 py-2 text-sm w-full text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
+                (change)="onFilterChange($event)"
+            >
+                <option value="null">...</option>
+                <option value="false">Ascendente</option>
+                <option value="true">Descendente</option>
+            </select>
+        </div>
+
+        <!-- Paginación -->
+        <div class="flex justify-start w-4/6 translate-x-14">
+            <post-pagination></post-pagination>
+        </div>
+    </div>
+
+    <!-- Card de posts -->
+    <div class = "flex flex-wrap justify-center gap-8 mt-12 mx-20 mb-20">
+        <div *ngFor="let post of posts">
+            <post-card [post]="post"></post-card>
+        </div>
+    </div>
+</div>

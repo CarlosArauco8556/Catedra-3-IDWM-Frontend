@@ -2,13 +2,17 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { LocalStorageService } from '../services/local-storage.service';
 import { JWTPayload } from '../interfaces/JWTpayload';
+import { ToastService } from '../services/toast.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const localStorageService = inject(LocalStorageService);
+  const toastService = inject(ToastService);
   const token = localStorageService.getVariable('token');
-  
+
   if (!token) {
+    toastService.error('Debe iniciar sesión');
     router.navigate(['/home']);
     return false;
   }
@@ -18,13 +22,15 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (!payload || !isTokenValid(payload)) {
     console.warn('Token inválido o expirado - Limpiando localStorage');
     localStorageService.removeVariable('token');
-    router.navigate(['/home']);
+    toastService.error('Tu sesión ha expirado. Por favor, inicia sesión nuevamente.');
+    router.navigate(['/login']);
     return false;
   }
 
   const timeToExpire = (payload.exp || 0) - Math.floor(Date.now() / 1000);
   if (timeToExpire < 300) { 
     console.warn('Token próximo a expirar');
+    toastService.warning('Tu sesión está a punto de expirar. Considera renovarla.');
   }
 
   const userRole = payload.role;
@@ -38,6 +44,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   if (requiredRoles.includes(normalizedUserRole)) {
     return true;
   } else {
+    toastService.error('No tienes permiso para acceder a esta página.');
     switch(normalizedUserRole) {
       case 'USER':
         if (localStorageService.getVariable('redirectAfterLogin'))

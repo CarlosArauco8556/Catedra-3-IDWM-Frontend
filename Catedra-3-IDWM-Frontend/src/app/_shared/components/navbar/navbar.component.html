@@ -90,12 +90,12 @@
             class="absolute -right-11 mt-2 w-32 bg-white border border-gray-300 rounded-lg shadow-lg"
           >
             <ul>
-              <li>
+              <li *ngIf="!isAuthenticated">
                 <a (click)="goToPage('Login')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
                   Iniciar Sesion
                 </a>
               </li>
-              <li>
+              <li *ngIf="!isAuthenticated">
                 <a (click)="goToPage('Register')" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
                   Registrarse
                 </a>

@@ -1,0 +1,26 @@
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  
+  input[type="text"]::placeholder {
+    color: #a3a3a3;
+  }
+  
+  input:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.4);
+  }
+  
+  button svg:hover {
+    color: #2563eb;
+  }
+  
+  a svg:hover {
+    color: #2563eb;
+  }
+  
+  a.relative {
+    position: relative;
+  }
