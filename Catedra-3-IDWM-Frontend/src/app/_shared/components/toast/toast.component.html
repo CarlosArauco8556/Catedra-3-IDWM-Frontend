@@ -1,4 +1,4 @@
-<div *ngIf = "toasts().length > 0" class="fixed top-5 right-5 z-[9999] space-y-4">
+<div *ngIf = "toasts().length > 0" class="fixed top-5 mt-16 right-5 z-[9999] space-y-4">
     <div *ngFor = "let toast of toasts(); trackBy: trackByToastId">
         <div
         class="flex items-center w-full max-w-xs p-4 animate-fade-in text-gray-500 bg-white rounded-lg shadow-md shadow-gray-400 transition-all duration-300"

@@ -19,9 +19,16 @@ export class NavbarComponent {
   auhtIconIsHovered = false;
   menuOpenPosts = false;
   menuOpenAuth = false;
+  isAuthenticated = false;
   errors: string[] = [];
 
   constructor(private router: Router){}
+
+  ngOnInit(): void {
+    this.authService.isAuthenticated$.subscribe((value) => {
+      this.isAuthenticated = value;
+    });
+  }
   
   toggleMenuPosts(): void{
     this.menuOpenPosts = !this.menuOpenPosts;

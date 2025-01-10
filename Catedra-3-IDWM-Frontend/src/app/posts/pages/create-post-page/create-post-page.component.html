@@ -1,2 +1,98 @@
 <navbar></navbar>
-<p>create-post-page works!</p>
+
+<div class="px-20 mt-12">
+
+    <!-- Formulario para agregar un post -->
+    <form [formGroup]="forms" (ngSubmit)="createPost()"
+      class="max-w-md mx-auto p-10 mb-14 rounded-lg shadow">
+  
+      <p class = "text-2xl text-center text-black font-extrabold">Crear Post</p>
+  
+      <!-- Titulo del post -->
+      <div class="mt-6 mb-4">
+        <label class="block text-sm font-medium text-gray-900 mb-1">Titulo del Post</label>
+        <input type="text" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5 mb-1"
+          [class.border-red-500]="forms.get('title')?.invalid && forms.get('title')?.touched"
+          placeholder="Ejemplo: Mi primer post." formControlName="title" required />
+    
+          <div *ngIf="forms.get('title')?.invalid && forms.get('title')?.touched">
+            <a class="text-red-500 text-sm font-normal">{{getFieldError("title")}}</a>
+        </div>
+      </div>
+    
+      <!-- Fecha de publicación -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-900 mb-1">Fecha de publicación</label>
+        <input type="date" class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full p-2.5 mb-1"
+          [class.border-red-500]="forms.get('publicationDate')?.invalid && forms.get('publicationDate')?.touched"
+          formControlName="publicationDate" required />
+    
+          <div *ngIf="forms.get('publicationDate')?.invalid && forms.get('publicationDate')?.touched">
+            <a class="text-red-500 text-sm font-normal">{{getFieldError("publicationDate")}}</a>
+        </div>
+      </div>
+    
+      <!-- Imagen del post -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-900 mb-1">Imagen del Post</label>
+        
+        <!-- Área de entrada de archivo con previsualización -->
+        <div class="relative">
+          <!-- Input file -->
+          <input 
+            type="file" 
+            (change)="onImageSelected($event)"
+            accept=".png,.jpg,.jpeg"
+            class="bg-gray-50 border border-gray-300 text-sm rounded-lg block w-full px-5 p-2.5 mb-1"
+            [class.border-red-500]="forms.get('image')?.invalid && forms.get('image')?.touched"
+            required
+          />
+    
+          <!-- Previsualización de la imagen -->
+          <div *ngIf="selectedImage" class="mt-2">
+            <div class="relative w-48 h-48 border rounded-lg overflow-hidden">
+              <img 
+                [src]="imagePreview" 
+                *ngIf="imagePreview"
+                class="w-full h-full object-cover"
+                alt="Vista previa"
+              />
+              <!-- Botón para eliminar la imagen -->
+              <button
+                type="button"
+                (click)="removeImage()"
+                class="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1 hover:bg-red-600 focus:outline-none"
+              >
+                <span class="sr-only">Eliminar imagen</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <!-- Información del archivo -->
+            <p class="text-sm text-gray-600 mt-1">
+              {{ selectedImage.name }} ({{ (selectedImage.size / 1024 / 1024).toFixed(2) }} MB)
+            </p>
+          </div>
+        </div>
+      
+        <!-- Mensajes de error -->
+        <div *ngIf="forms.get('image')?.invalid && forms.get('image')?.touched">
+          <p class="text-red-500 text-sm font-normal">{{getFieldError('image')}}</p>
+        </div>
+      
+        <!-- Mensaje de ayuda -->
+        <p class="mt-1 text-sm text-gray-500">
+          Formatos permitidos: PNG, JPG. Tamaño máximo: 5 MB
+        </p>
+      </div>
+    
+      <!-- Botón de agregar -->
+      <button type="submit"  [ngClass]="{'cursor-not-allowed opacity-50': forms.invalid}"
+        class="text-white bg-blue-600 hover:bg-blue-700 font-medium rounded-lg text-base w-full sm:w-full py-2.5 text-center mt-4">
+        Crear Producto
+      </button>
+    </form> 
+  
+  </div>
+  

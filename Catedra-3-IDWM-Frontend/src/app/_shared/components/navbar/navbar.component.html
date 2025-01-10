@@ -11,7 +11,7 @@
       <div class="flex items-center space-x-6">
 
         <!-- Posts -->
-        <div class="relative">
+        <div class="relative" *ngIf="isAuthenticated">
             <button
               (click)="toggleMenuPosts()"
               class="text-gray-600 hover:text-gray-800 focus:outline-none translate-y-0.5"
@@ -100,7 +100,7 @@
                   Registrarse
                 </a>
               </li>
-              <li>
+              <li *ngIf="isAuthenticated">
                 <a (click)="logOut()" class="block px-4 py-2 text-gray-700 hover:bg-gray-200">
                   Cerrar Sesion
                 </a>
